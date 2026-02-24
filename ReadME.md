@@ -1,57 +1,38 @@
 ![task_01kj7tx470fdste5ftm0erc6qf_1771937135_img_0](https://github.com/user-attachments/assets/0d95c3cc-cf50-4788-ac24-bfee373af6e4)
 
 
-
-
 # cproxy
 
-`cproxy` è un **reverse proxy HTTP leggero scritto in C**, pensato per essere semplice da capire, facile da installare e abbastanza modulare da estendere.
+`cproxy` is a **lightweight HTTP reverse proxy written in C**, designed to be easy to understand, simple to install, and modular enough to extend.
 
-L’obiettivo del progetto è offrire una base solida per gestire richieste HTTP in ingresso, instradarle verso servizi interni (backend), e aggiungere funzionalità utili come logging, routing e statistiche.
-
----
-
-## Perché questo progetto
-
-Questo progetto nasce per:
-
-- capire davvero come funziona un reverse proxy (a basso livello)
-- avere un componente leggero e controllabile
-- costruire una base open source chiara, leggibile e migliorabile
-- imparare networking, parsing HTTP e gestione socket in C
-
-In pratica: è un progetto didattico **ma con una struttura reale**, utile anche come base per sviluppi più avanzati.
+The goal of this project is to provide a solid base for handling incoming HTTP requests, routing them to internal services (backends), and adding useful features such as logging, routing, and runtime statistics.
 
 ---
 
-## Cosa fa (in sintesi)
+## Why this project
+
+This project was built to:
+
+- understand how a reverse proxy works at a low level
+- have a lightweight and fully controllable component
+- build a clean, open-source base that is easy to read and improve
+- learn networking, HTTP parsing, and socket handling in C
+
+In short: it is a learning-oriented project **with a real-world structure**, useful as a base for more advanced features.
+
+---
+
+## What it does (in short)
 
 `cproxy`:
 
-- ascolta su una porta (socket server)
-- accetta connessioni client
-- legge la richiesta HTTP
-- decide dove instradarla (routing)
-- inoltra la richiesta al backend corretto
-- riceve la risposta
-- la rimanda al client
-- registra log e aggiorna statistiche
+- listens on a port (server socket)
+- accepts client connections
+- reads the HTTP request
+- decides where to route it
+- forwards the request to the correct backend
+- receives the response
+- sends it back to the client
+- writes logs and updates statistics
 
 ---
-
-## Architettura del progetto
-
-```text
-cproxy/
-├── Makefile
-├── proxy.conf
-├── README.md
-└── src/
-    ├── main.c        ← entry point, signal handling, accept loop
-    ├── config.h/c    ← parsing config file, validazione
-    ├── log.h/c       ← logger thread-safe con livelli
-    ├── stats.h/c     ← contatori atomici, JSON export
-    ├── net.h/c       ← socket primitives, connect timeout, pipe
-    ├── http.h/c      ← parse request/response, header manipulation
-    ├── router.h/c    ← route matching (longest prefix first)
-    └── proxy.h/c     ← logica core: forward request, handle interno
